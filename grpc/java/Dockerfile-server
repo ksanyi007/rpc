@@ -1,0 +1,25 @@
+FROM openjdk:8
+
+# Create user
+RUN groupadd -r app && useradd -r -g app app
+
+# Create app directory
+RUN mkdir -p /app
+WORKDIR /app
+
+# Bundle app source
+COPY . /app
+
+# Build app
+RUN ./compile
+
+# Switch to user
+USER app
+
+# Set data location
+VOLUME ["/data"]
+
+# Set up exposed port
+EXPOSE 50051
+
+CMD [ "./server", "/data/data.csv" ]

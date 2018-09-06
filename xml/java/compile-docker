@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+docker build -t xmlrpc-java-server -f Dockerfile-server .
+docker build -t xmlrpc-java-client -f Dockerfile-client .

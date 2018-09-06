@@ -1,0 +1,53 @@
+apply plugin: 'java'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+  }
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+dependencies {
+  compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
+  // https://mvnrepository.com/artifact/com.thetransactioncompany/jsonrpc2-server
+  compile group: 'com.thetransactioncompany', name: 'jsonrpc2-server', version: '1.11'
+  // https://mvnrepository.com/artifact/com.thetransactioncompany/jsonrpc2-client
+   compile group: 'com.thetransactioncompany', name: 'jsonrpc2-client', version: '1.16.4'
+  // https://mvnrepository.com/artifact/com.nanohttpd/nanohttpd
+  compile group: 'com.nanohttpd', name: 'nanohttpd', version: '2.2.0'
+  // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+  compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+}
+
+apply plugin: 'eclipse'
+
+// Provide convenience executables for trying out the examples.
+apply plugin: 'application'
+
+startScripts.enabled = false
+
+task rpcbenchServer(type: CreateStartScripts) {
+  mainClassName = 'com.rpcbench.jsonrpc.RpcbenchServer'
+  applicationName = 'rpcbench-server'
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
+task rpcbenchClient(type: CreateStartScripts) {
+  mainClassName = 'com.rpcbench.jsonrpc.RpcbenchClient'
+  applicationName = 'rpcbench-client'
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into('bin') {
+  from(rpcbenchServer)
+  from(rpcbenchClient)
+  fileMode = 0755
+}

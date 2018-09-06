@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+docker build -t jsonrpc-java-server -f Dockerfile-server .
+docker build -t jsonrpc-java-client -f Dockerfile-client .

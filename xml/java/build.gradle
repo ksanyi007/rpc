@@ -1,0 +1,46 @@
+apply plugin: 'java'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+  }
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+dependencies {
+  compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
+  compile group: 'org.apache.ws.xmlrpc', name: 'xmlrpc', version: '2.0.1'
+}
+
+apply plugin: 'eclipse'
+
+// Provide convenience executables for trying out the examples.
+apply plugin: 'application'
+
+startScripts.enabled = false
+
+task rpcbenchServer(type: CreateStartScripts) {
+  mainClassName = 'com.rpcbench.xmlrpc.RpcbenchServer'
+  applicationName = 'rpcbench-server'
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
+task rpcbenchClient(type: CreateStartScripts) {
+  mainClassName = 'com.rpcbench.xmlrpc.RpcbenchClient'
+  applicationName = 'rpcbench-client'
+  outputDir = new File(project.buildDir, 'tmp')
+  classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into('bin') {
+  from(rpcbenchServer)
+  from(rpcbenchClient)
+  fileMode = 0755
+}

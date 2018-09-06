@@ -1,0 +1,18 @@
+[
+    {
+        "name": "request",
+        "params": [1, false],
+        "returns": {
+          "id": 0,
+          "first_name": "String",
+          "last_name": "String",
+          "age": 0,
+          "email": "String",
+          "phone": "String",
+          "newsletter": false,
+          "latitude": 0.0,
+          "longitude": 0.0,
+          "photo": "binstring"
+        }
+    }
+]

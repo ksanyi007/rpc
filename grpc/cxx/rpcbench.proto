@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.rpchbench.grpc";
+option java_outer_classname = "RPCBenchProto";
+option objc_class_prefix = "RPCBP";
+
+package rpcbench;
+
+service Database {
+  rpc Request (InfoRequest) returns (Info) {}
+  rpc RequestAll (InfoListRequest) returns (InfoList) {}
+}
+
+message Info {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  int32 age = 4;
+  string email = 5;
+  string phone = 6;
+  bool newsletter = 7;
+  float latitude = 8;
+  float longitude = 9;
+  bytes photo = 10;
+}
+
+message InfoList {
+  repeated Info infos = 1;
+}
+
+message InfoRequest {
+  int32 id = 1;
+  bool photo = 2;
+}
+
+message InfoListRequest {
+  bool photo = 1;
+}

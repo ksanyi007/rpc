@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+docker build -t grpc-java-server -f Dockerfile-server .
+docker build -t grpc-java-client -f Dockerfile-client .
